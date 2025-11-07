@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>03-Messaging.EntityFramework.RabbitMq</name>
+    </assembly>
+    <members>
+        <member name="T:PubSea.Messaging.EntityFramework.RabbitMq.Configs.RabbitMqConfig">
+            <summary>
+            Configuration of RabbitMq setup.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.RabbitMq.Configs.RabbitMqConfig.ClientId">
+            <summary>
+            The RabbitMq ClientId.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.RabbitMq.Configs.RabbitMqConfig.ConnectionString">
+            <summary>
+            Full connection string in order to connect to RabbitMq.
+            </summary>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.RabbitMq.Configs.SeaRabbitMqMessagingConfigExtensions.UseRabbitMqBroker(PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig,System.Action{PubSea.Messaging.EntityFramework.RabbitMq.Configs.RabbitMqConfig})">
+            <summary>
+            Adds RabbitMq transport layer to messaging system.
+            </summary>
+            <param name="config"></param>
+            <param name="rabbitMqConfig"></param>
+            <returns></returns>
+            <exception cref="T:PubSea.Framework.Exceptions.SeaException"></exception>
+        </member>
+    </members>
+</doc>

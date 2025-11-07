@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>PubSea.Messaging.EntityFramework.Kafka</PackageId>
+		<Product>PubSea.Messaging.EntityFramework.Kafka</Product>
+		<PackageTags>sea framework messaging entityFramework kafka</PackageTags>
+		<Description>sea framework messaging entityFramework kafka</Description>
+		<RootNamespace>PubSea.Messaging.EntityFramework.Kafka</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>./Messaging.EntityFramework.Kafka.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Confluent.Kafka" Version="2.12.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Services\Abstractions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\01-Messaging.EntityFramework\01-Messaging.EntityFramework.csproj" />
+	</ItemGroup>
+</Project>

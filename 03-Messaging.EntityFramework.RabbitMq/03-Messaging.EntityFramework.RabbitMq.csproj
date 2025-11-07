@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>PubSea.Messaging.EntityFramework.RabbitMq</PackageId>
+		<Product>PubSea.Messaging.EntityFramework.RabbitMq</Product>
+		<PackageTags>sea framework messaging entityFramework RabbitMq</PackageTags>
+		<Description>sea framework messaging entityFramework RabbitMq</Description>
+		<RootNamespace>PubSea.Messaging.EntityFramework.RabbitMq</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>./Messaging.EntityFramework.RabbitMq.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\01-Messaging.EntityFramework\01-Messaging.EntityFramework.csproj" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>MessagingEfKafka</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+		<PackageReference Include="CaseConverter" Version="2.0.1" />
+		<PackageReference Include="Aspire.Npgsql" Version="9.5.1" />
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.1" />
+		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Sea.MessagingContracts" Version="9.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\02-Messaging.EntityFramework.Kafka\02-Messaging.EntityFramework.Kafka.csproj" />
+		<ProjectReference Include="..\..\03-Messaging.EntityFramework.RabbitMq\03-Messaging.EntityFramework.RabbitMq.csproj" />
+	</ItemGroup>
+</Project>

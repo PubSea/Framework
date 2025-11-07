@@ -1,0 +1,808 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>00-Framework</name>
+    </assembly>
+    <members>
+        <member name="T:PubSea.Framework.ApiResponse.ApiActionResult">
+            <summary>
+            An extension on <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.ApiResponse.ApiActionResult.ToActionResult(System.Object,System.Net.HttpStatusCode)">
+            <summary>
+            It creates an action result from the response and provide a http status code for the final action result
+            </summary>
+            <param name="obj">Object to be sent as final result</param>
+            <param name="statusCode">Response http status code</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/></returns>
+        </member>
+        <member name="M:PubSea.Framework.ApiResponse.ApiActionResult.ToActionResult(System.Object,System.String)">
+            <summary>
+            It creates an action result from the response and provide a http status code for the final action result
+            </summary>
+            <param name="obj">Object to be sent as final result</param>
+            <param name="locationForCreatedResult">Location hyper media after creating a resource. 
+            Resource must be available through this address after creation</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/></returns>
+        </member>
+        <member name="T:PubSea.Framework.ApiResponse.ApiError">
+            <summary>
+            This is a uniform http api error
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.ApiResponse.ApiResult">
+            <summary>
+            A wrapper on final api response to unify all responses.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.ApiResponse.ApiResult`1">
+            <summary>
+            A generic wrapper on final api response to unify all responses.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Attributes.ReformatInputValidationAttribute">
+            <summary>
+            Reforms default input errors and turn them in <see cref="T:PubSea.Framework.ApiResponse.ApiError"/>.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Attrubutes.SeaRateLimitAttribute">
+            <summary>
+            Sea rate limit attribute taking time window in seconds and 
+            max requests in the specified time window
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Data.HeavyQueryInterceptor">
+            <summary>
+            Recongnizes heavy queries (queries with more than 500ms processing time) sent to database.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Data.IEfUnitOfWork">
+            <summary>
+            Entity framwork unit of work including execution strategy methods.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Data.IUnitOfWork">
+            <summary>
+            Unit of work in order to encapsulate a transaction.
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Data.IUnitOfWork.BeginTransaction(System.Data.IsolationLevel,System.Threading.CancellationToken)">
+            <summary>
+            Starts a new transaction asynchronously.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Data.IUnitOfWork.RollbackTransaction(System.Threading.CancellationToken)">
+            <summary>
+            Rollbacks manual transaction asynchronously.
+            </summary>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Data.IUnitOfWork.CommitTransaction(System.Threading.CancellationToken)">
+            <summary>
+            Commits manual transaction asynchronously.
+            </summary>
+            <returns>A task that represents the asynchronous save operation</returns>
+        </member>
+        <member name="M:PubSea.Framework.Data.IUnitOfWork.SaveChanges(System.Threading.CancellationToken)">
+            <summary>
+            Commits internal transaction asynchronously.
+            </summary>
+            <param name="ct"></param>
+            <returns>A task that represents the asynchronous save operation</returns>
+        </member>
+        <member name="T:PubSea.Framework.Data.VoidUnitOfWork">
+            <summary>
+            This is just a void unit of work. It does nothing special and is useful in mocking or 
+            for non transactional database engines
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Entities.AggregateRoot`1">
+            <summary>
+            Abstract class to be inherited by aggregate roots.
+            </summary>
+            <typeparam name="TId">Type of aggregate root Id</typeparam>
+        </member>
+        <member name="T:PubSea.Framework.Entities.Entity`1">
+            <summary>
+            Abstract class to be inherited by entities.
+            </summary>
+            <typeparam name="TId">Type of entity Id</typeparam>
+        </member>
+        <member name="P:PubSea.Framework.Entities.Entity`1.Id">
+            <summary>
+            Type of Id
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.SetStateByEvent(PubSea.Framework.Events.IEvent)">
+            <summary>
+            Identifies state if specified event occurs.
+            </summary>
+            <param name="event"></param>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.ValidateInvariants">
+            <summary>
+            Validates invariants of the object.
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.Emit(PubSea.Framework.Events.IEvent)">
+            <summary>
+            Method to handle event.
+            </summary>
+            <param name="event">event</param>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.GetEvents">
+            <summary>
+            Returns all object events.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.ClearEvents">
+            <summary>
+            Clears all events.
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.Equals(System.Object)">
+            <summary>
+            Checks equality of object with another object.
+            </summary>
+            <param name="obj">other object</param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Entities.Entity`1.GetHashCode">
+            <summary>
+            Returns object hash code.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PubSea.Framework.Entities.IAuditable">
+            <summary>
+            A marker to find auditable objects.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IDomainEvent">
+            <summary>
+            Interface which every event has to implement it to get recognized as a domain event. 
+            Type of EventId is long
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEnrichedDomainEvent">
+            <summary>
+            Interface which every internal event has to implement it to get recognized as an internal event. 
+            Type of EventId is long
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEnrichedDomainEvent`1">
+            <summary>
+            Interface which every internal event has to implement it to get recognized as an internal event. 
+            </summary>
+            <typeparam name="T">Type of EventId</typeparam>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEnrichedIntegrationEvent">
+            <summary>
+            Interface which every event has to implement it to get recognized as an event. 
+            Type of EventId is long
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEnrichedIntegrationEvent`1">
+            <summary>
+            Interface which every event has to implement it to get recognized as an event.
+            </summary>
+            <typeparam name="T">Type of EventId</typeparam>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEvent">
+            <summary>
+            Base interface to show an event even domain or integraion events
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEventDispatcher">
+            <summary>
+            Interface that should be implemented by every dispatcher class.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Events.IEventHandler`1">
+            <summary>
+            Interface that every EventHandler class should implement it in order to be recognized as an event handler.
+            </summary>
+            <typeparam name="TEvent"></typeparam>
+        </member>
+        <member name="T:PubSea.Framework.Events.IIntegrationEvent">
+            <summary>
+            Interface which every event has to implement it to get recognized as an integration event. 
+            Type of EventId is long
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.OK">
+            <summary>
+            Not an error; returned on success.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Cancelled">
+            <summary>
+            The operation was cancelled (typically by the caller).
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Unknown">
+            <summary>
+            Unknown error. An example of where this error may be returned is if a Status 
+            value received from another address space belongs to an error-space that is not 
+            known in this address space. Also errors raised by APIs that do not return enough 
+            error information may be converted to this error.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.InvalidArgument">
+            <summary>
+            Client specified an invalid argument. Note that this differs from FAILED_PRECONDITION. 
+            INVALID_ARGUMENT indicates arguments that are problematic regardless of the state 
+            of the system (e.g., a malformed file name).
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.DeadlineExceeded">
+            <summary>
+            Deadline expired before operation could complete. For operations that change 
+            the state of the system, this error may be returned even if the operation has 
+            completed successfully. For example, a successful response from a server could 
+            have been delayed long enough for the deadline to expire.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.NotFound">
+            <summary>
+            Some requested entity (e.g., file or directory) was not found.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.AlreadyExists">
+            <summary>
+            Some entity that we attempted to create (e.g., file or directory) already exists.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.PermissionDenied">
+            <summary>
+            The caller does not have permission to execute the specified operation. PERMISSION_DENIED 
+            must not be used for rejections caused by exhausting some resource (use RESOURCE_EXHAUSTED 
+            instead for those errors). PERMISSION_DENIED must not be used if the caller can 
+            not be identified (use UNAUTHENTICATED instead for those errors).
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.ResourceExhausted">
+            <summary>
+            Some resource has been exhausted, perhaps a per-user quota, or perhaps the entire 
+            file system is out of space.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.FailedPrecondition">
+            <summary>
+            Operation was rejected because the system is not in a state required for the 
+            operation's execution. For example, directory to be deleted may be non-empty, 
+            an rmdir operation is applied to a non-directory, etc.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Aborted">
+            <summary>
+            The operation was aborted, typically due to a concurrency issue like sequencer 
+            check failures, transaction aborts, etc.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.OutOfRange">
+            <summary>
+            Operation was attempted past the valid range. E.g., seeking or reading past end of file.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Unimplemented">
+            <summary>
+            Operation is not implemented or not supported/enabled in this service.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Internal">
+            <summary>
+            Internal errors. Means some invariants expected by underlying system has been 
+            broken. If you see one of these errors, something is very broken.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Unavailable">
+            <summary>
+            The service is currently unavailable. This is a most likely a transient condition 
+            and may be corrected by retrying with a backoff. Note that it is not always safe 
+            to retry non-idempotent operations.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.DataLoss">
+            <summary>
+            Unrecoverable data loss or corruption.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.Unauthenticated">
+            <summary>
+            The request does not have valid authentication credentials for the operation.
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.InvalidOperation">
+            <summary>
+            The operation is not valid
+            </summary>
+        </member>
+        <member name="F:PubSea.Framework.Exceptions.ExceptionStatus.TooManyRequests">
+            <summary>
+            Too many requests
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Exceptions.SeaException">
+            <summary>
+            This is uniform exception in all applications. Every exception can carry a exception status 
+            which would be translated to http status code if the final endpoint is http rest api or it 
+            to grpc status code if the final endpoint is a grpc service.
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Extensions.SeaSloExtensions.AddSeaIdentityProviderSlo(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            Registers slo services to pipeline and gives power of pushing logout event to Redis 
+            using <see cref="T:PubSea.Framework.Services.Abstractions.ILogoutPusher" /> service. This service is injectable. To use slo services 
+            <see cref="M:PubSea.Framework.Extensions.SeaCachingExtensions.AddSeaRedisHybridCache(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Framework.Extensions.RedisHybridOptions})"/> is needed to 
+            be registered
+            </summary>
+            <param name="services"></param>
+            <param name="redisConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Extensions.SeaSloExtensions.UseSeaIdentityProviderSlo(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds sigle logout to pipeline. If a session has expired this will catch it and does not 
+            allow to coninue request and of course remove current session cookies
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Extensions.Serialization.ToByteArray(System.Object)">
+            <summary>
+            Serializes object to byte array
+            </summary>
+            <param name="objectToSerialize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Extensions.Serialization.FromByteArray``1(System.Byte[])">
+            <summary>
+            Deserializes byte array to object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="arrayToDeserialize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddCurlHealthCheck(Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder,PubSea.Framework.Http.HealthCheck.HealthCheckEndpoint[])">
+            <summary>
+            Adds curl health check for the given endpoints
+            </summary>
+            <param name="healthChecksBuilder">health check builder</param>
+            <param name="endpoints">endpoint</param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddSeaEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the default event dispatcher in appllication. You can register your dispatcher 
+            in dotnet IoC container one by one as well.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.UseSeaEventDispatcher(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Using of sea event dispatcher and its dependencies
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddSnowflakeService(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Framework.Services.Implementations.SnowflakeOptions})">
+            <summary>
+            Registers snowflake servcie in DI container.
+            </summary>
+            <param name="services"></param>
+            <param name="config">SnowflakeOptions</param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddHashIdService(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Framework.Services.Implementations.HashIdOptions})">
+            <summary>
+            Registers hashid service in DI container.
+            </summary>
+            <param name="services"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddDateTimeService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers datetime service in DI container.
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddEfUnitOfWork``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers entity framework unit of work in DI container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.UseDatabase``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            This method ensures database has been created and is always updated.
+            </summary>
+            <typeparam name="T">T is type of DbContext of the project.</typeparam>
+            <param name="app">app is ApplicationBuilder of the project.</param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.UseExecptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Registers ExceptionHandler middleware
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddSeaMapper(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Framework.Mapping.SeaTypeAdapterConfig})">
+            <summary>
+            Adds Sea's mapper to the project. It is powered by Mapster nuget package. 
+            To configure mapping options, you can simply use SeaTypeAdapterConfig in the method or 
+            inject it in another class and do your configuration
+            </summary>
+            <param name="services"></param>
+            <param name="config">SeaTypeAdapterConfig</param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.UseSeaMapper(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Using of sea predefined mapper
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddSeaFileStore(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Framework.Services.Dtos.SeaFileStoreConfig})">
+            <summary>
+            Registers file services in pipeline
+            </summary>
+            <param name="services"></param>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.DomainModel.FrameworkBootstarpper.AddHttpErrorLoggerMessageHandler(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers <see cref="T:PubSea.Framework.Http.HttpErrorLoggerMessageHandler"/> to services in order to be used in 
+            <see cref="T:System.Net.Http.HttpClient"/> message handlers pipeline
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PubSea.Framework.Interceptors.ExceptionInterceptor">
+            <summary>
+            This is an interceptor which can be used to catch and handle errors raised in the application 
+            before going out of the app. It is beneficial to use this interceptor in grpc services.
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Middlewares.ExceptionMiddleware">
+            <summary>
+            This is a middleware which can be used to catch and handle errors raised in the application 
+            before going out of the app. It is beneficial to use this middleware in http rest apis.
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Abstractions.IDateTimeService.Now">
+            <summary>
+            Local datetime
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Abstractions.IDateTimeService.UtcNow">
+            <summary>
+            UTC datetime
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IDateTimeService.GetDateTimeWithOffset(System.DateTime,System.TimeSpan)">
+            <summary>
+            Returuns datetime with the requested offset
+            </summary>
+            <param name="datetime"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IDateTimeService.ToPersianDate(System.DateTime)">
+            <summary>
+            Turns a gregorian datetime into persian datetime
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IDateTimeService.FromPersianDate(System.Int32,System.Byte,System.Byte,System.Byte,System.Byte,System.Byte,System.Int32,System.TimeSpan)">
+            <summary>
+            Turns persian datetime to gregorian datetime
+            </summary>
+            <param name="year">Year</param>
+            <param name="month">Month</param>
+            <param name="day">Day</param>
+            <param name="hour">Hour</param>
+            <param name="minute">Minute</param>
+            <param name="second">Second</param>
+            <param name="millisecond">Millisecond</param>
+            <param name="offset">Offset</param>
+            <returns></returns>
+        </member>
+        <member name="T:PubSea.Framework.Services.Abstractions.IHashIdService">
+            <summary>
+            This is a hashid service which can be used in order to encode and decode ids provided in rest urls so that 
+            the end user can NOT find the next url providing a specific resource
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.Encode(System.Int32)">
+            <summary>
+            Encodes an integer and returns a code
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.EncodeLong(System.Int64)">
+            <summary>
+            Encodes a long number and returns a code
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.Decode(System.String)">
+            <summary>
+            Decodes a code to an integer
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.DecodeLong(System.String)">
+            <summary>
+            Decodes a code to a long number
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.GenerateFakeHashId">
+            <summary>
+            Generates a fake hash id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.IHashIdService.IsFakeHashId(System.String)">
+            <summary>
+            Checks if given id is fake or not
+            </summary>
+            <param name="hashId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ILogoutPusher.Push(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Pushes logout event to Redis
+            </summary>
+            <param name="sessionId"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.GetFile(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets a file using its relative path after root name
+            </summary>
+            <param name="filePath"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.SaveFile(System.String,System.String,System.Byte[],System.Threading.CancellationToken)">
+            <summary>
+            Saves file
+            </summary>
+            <param name="filePath"></param>
+            <param name="contentType"></param>
+            <param name="content"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.RelocateFile(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Relocates file using two relative paths
+            </summary>
+            <param name="oldFilePath"></param>
+            <param name="newFilePath"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.RemoveFile(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Removes file using its relative path
+            </summary>
+            <param name="filePath"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.ZipFile(PubSea.Framework.Services.Dtos.FileDto,System.Threading.CancellationToken)">
+            <summary>
+            Zips a file
+            </summary>
+            <param name="file"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISeaFileStore.ZipFiles(System.Collections.Generic.IEnumerable{PubSea.Framework.Services.Dtos.FileDto},System.Threading.CancellationToken)">
+            <summary>
+            Zips multiple files
+            </summary>
+            <param name="files"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PubSea.Framework.Services.Abstractions.ISnowflakeService">
+            <summary>
+            This service creates a unique id each time it is called. To see more information about Twitter snowflake id 
+            please refer to https://en.wikipedia.org/wiki/Snowflake_ID
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Services.Abstractions.ISnowflakeService.CreateId">
+            <summary>
+            Creates a snowflake id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:PubSea.Framework.Services.Dtos.SeaFileStoreConfig.BaseUrl">
+            <summary>
+            Base url of object storage
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Dtos.SeaFileStoreConfig.UserName">
+            <summary>
+            UserName to connect to object storage
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Dtos.SeaFileStoreConfig.Password">
+            <summary>
+            Password to connect to object storage
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Dtos.SeaFileStoreConfig.RootName">
+            <summary>
+            Name of root element which other elements originate from it. For storage like Minio 
+            this is the bucket name
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Implementations.HashIdOptions.Salt">
+            <summary>
+            The salt is used for encoding and decoding. If you are going to change it, you need to 
+            make sure to keep it safe and unchangable in order to keep consistency.
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Implementations.HashIdOptions.MinHashLength">
+            <summary>
+            Minimum length of generated hash 
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Implementations.SnowflakeOptions.GeneratorId">
+            <summary>
+            Defines id for the instance responsible for generating id
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Implementations.SnowflakeOptions.Epoch">
+            <summary>
+            The base time to start counting
+            </summary>
+        </member>
+        <member name="P:PubSea.Framework.Services.Implementations.SnowflakeOptions.IdStructure">
+            <summary>
+            Structure to define parts of id including timestamp bits, generator id bits and sequence bits
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Utility.DateTimeHelper.ToGregorianDateTime(System.String)">
+            <summary>
+            Turns Jalali string with format yyyy/MM/dd into DateTimeOffset
+            </summary>
+            <param name="jalaliDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.DateTimeHelper.ToGregorianDateTimeOrDefault(System.String,System.Nullable{System.DateTimeOffset})">
+            <summary>
+            Turns Jalali string with format yyyy/MM/dd into DateTimeOffset
+            </summary>
+            <param name="jalaliDate"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.DateTimeHelper.ToJalaliDateTimeString(System.DateTime)">
+            <summary>
+            Turns DateTime into Jalali string with format yyyy/MM/dd HH:mm:ss
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.DateTimeHelper.ToJalaliDateString(System.DateTime)">
+            <summary>
+            Turns DateTime into Jalali string with format yyyy/MM/dd
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.DateTimeHelper.ToJalaliMonthAndDayString(System.DateTime)">
+            <summary>
+            Turns DateTime into Jalali string with format MM/dd
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="P:PubSea.Framework.Utility.ExceptionHelper.ExcludedExCodes">
+            <summary>
+            It could be useful to ignore some error codes and do not show the real reason of exception to end user
+            </summary>
+        </member>
+        <member name="T:PubSea.Framework.Utility.LogHelper">
+            <summary>
+            This is an extension on dotnet ILogger
+            </summary>
+        </member>
+        <member name="M:PubSea.Framework.Utility.LogHelper.LogEnriched(Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.String,System.Object[])">
+            <summary>
+            Logs with log level as well as datetime in gregorian and jalali formats.
+            </summary>
+            <param name="logger"></param>
+            <param name="logLevel"></param>
+            <param name="message"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:PubSea.Framework.Utility.LogHelper.LogEnriched(Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs with log level and exception as well as datetime in gregorian and jalali formats.
+            </summary>
+            <param name="logger"></param>
+            <param name="logLevel"></param>
+            <param name="exception"></param>
+            <param name="message"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:PubSea.Framework.Utility.LogHelper.LogSecurityEnriched(Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.String,System.Object[])">
+            <summary>
+            Logs with log level and exception as well as datetime in gregorian and jalali formats and security flag.
+            </summary>
+            <param name="logger"></param>
+            <param name="logLevel"></param>
+            <param name="message"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:PubSea.Framework.Utility.LogHelper.LogSecurityEnriched(Microsoft.Extensions.Logging.ILogger,Microsoft.Extensions.Logging.LogLevel,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs with log level and exception as well as datetime in gregorian and jalali formats and security flag.
+            </summary>
+            <param name="logger"></param>
+            <param name="logLevel"></param>
+            <param name="exception"></param>
+            <param name="message"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:PubSea.Framework.Utility.LogHelper.LogActivity(Microsoft.Extensions.Logging.ILogger,Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Logging.LogLevel,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs activity
+            </summary>
+            <param name="logger"></param>
+            <param name="httpContextAccessor"></param>
+            <param name="logLevel"></param>
+            <param name="exception"></param>
+            <param name="message"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:PubSea.Framework.Utility.NumberStarifyer.Starify(System.String,System.Int32,System.Int32)">
+            <summary>
+            Starify a number. It is useful for hiding some part of phone number and etc.
+            </summary>
+            <param name="number"></param>
+            <param name="startIndex"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.StringHelper.CorrectSpelling(System.String)">
+            <summary>
+            Correct spelling for a string
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.StringHelper.CorrectSpelling(System.Char[])">
+            <summary>
+            Correct spelling for a string
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Framework.Utility.StringHelper.CorrectSpelling(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Correct spelling for a string
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

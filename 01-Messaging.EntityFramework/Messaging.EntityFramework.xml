@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>01-Messaging.EntityFramework</name>
+    </assembly>
+    <members>
+        <member name="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.PublishOutboxInstantly">
+            <summary>
+            <para>
+            Specifies if messages publish instantly after adding to database or not. 
+            Notice if this is true, where ever a flow or prioritization exists, might face problems 
+            because it is possible transporting message to broker have error and the flow breaks. 
+            </para>
+            <para>
+            If a flow
+            or prioritization exists it is better this propery be false and have short <see cref="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.OutboxPollingInterval"/> but
+            if this conditions does not exist it is more performant to have this equal to true
+            with long <see cref="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.OutboxPollingInterval"/>
+            </para>
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.OutboxPollingInterval">
+            <summary>
+            <para>
+            The period of time for each cycle in order to detect and publish unpublished messages 
+            to broker then remove them from database.
+            </para> 
+            <para>If <see cref="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.PublishOutboxInstantly"/> is true it is better 
+            to have this time longer than against when <see cref="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.PublishOutboxInstantly"/> is false
+            </para>
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.InboxRetentionInterval">
+            <summary>
+            The period to do retention cycle on inbox messages and remove old ones.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.InboxMessageTtl">
+            <summary>
+            The time to live (expiry) for inbox messages.
+            </summary>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig.UseDefaultBroker">
+            <summary>
+            This provider only logs messages to console and does NOT do anything more. It is good
+            for debug purposes.
+            </summary>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.EntityFramework.ISeaMessagingDbContext">
+            <summary>
+            This interface MUST be implemented by application dbcontext so messaging system can work
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.EntityFramework.ISeaMessagingDbContext.OutboxMessages">
+            <summary>
+            This property defines a table for outbox messages.
+            </summary>
+            <remarks>
+            All table configs are configurable by implementing <see cref="T:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1"/> in
+            application using EF fluent api and reference it in <see cref="M:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)"/>
+            </remarks>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.EntityFramework.ISeaMessagingDbContext.InboxMessages">
+            <summary>
+            This property defines a table for inbox messages.
+            </summary>
+            <remarks>
+            All table configs are configurable by implementing <see cref="T:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1"/> in
+            application using EF fluent api and reference it in <see cref="M:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)"/>
+            </remarks>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.EntityFramework.ISeaMessagingDbContext.ConsumedFaultMessages">
+            <summary>
+            This property defines a table for those messages that face exception during process.
+            </summary>
+            <remarks>
+            All table configs are configurable by implementing <see cref="T:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration`1"/> in
+            application using EF fluent api and reference it in <see cref="M:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)"/>
+            </remarks>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.MessagingEntityFramworkBootstrapper.AddSeaMessaging``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig})">
+            <summary>
+            Adds messaging implementation.
+            </summary>
+            <typeparam name="DbContextType">The application dbcontext type</typeparam>
+            <param name="services"></param>
+            <param name="config"></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage">
+            <summary>
+            Fault message declaration
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Id">
+            <summary>
+            key of consumed message. This key is exactly equal to <see cref="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.Id"/> or
+            <see cref="P:PubSea.Messaging.EntityFramework.Models.InboxMessage.Id"/>
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.UtcCreationDate">
+            <summary>
+            Original creation date of message. This key is exactly equal to <see cref="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.UtcCreationDate"/>.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Payload">
+            <summary>
+            A json containing transported data.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Type">
+            <summary>
+            The clr type of original message.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.PrioritizerKey">
+            <summary>
+            The key in order to keep prioritization of message processing.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Exception">
+            <summary>
+            The exception info occured during processing received message
+            </summary>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.Models.InboxMessage">
+            <summary>
+            Inbox message declaration
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.InboxMessage.Id">
+            <summary>
+            key of inbox message. This key is exactly equal to <see cref="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.Id"/> or
+            <see cref="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Id"/>.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.InboxMessage.UtcReceivedDate">
+            <summary>
+            The time message received.
+            </summary>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.Models.OutboxMessage">
+            <summary>
+            Outbox message declaration
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.UtcCreationDate">
+            <summary>
+            Original creation date of message.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.Id">
+            <summary>
+            key of outbox message. This key is exactly equal to <see cref="P:PubSea.Messaging.EntityFramework.Models.InboxMessage.Id"/> or
+            <see cref="P:PubSea.Messaging.EntityFramework.Models.ConsumedFaultMessage.Id"/>.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.Payload">
+            <summary>
+            A json containing transported data.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.Type">
+            <summary>
+            The clr type of original message.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Models.OutboxMessage.PrioritizerKey">
+            <summary>
+            The key in order to keep prioritization of message processing.
+            </summary>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaConsumer`1">
+            <summary>
+            The main interface that all consumers MUST implement in order to consume receiving message.
+            </summary>
+            <remarks>
+            NOTICE for every message type ONLY one implementation is needed and other implementations 
+            does not get called
+            </remarks>
+            <typeparam name="TMessage">Type of message</typeparam>
+        </member>
+        <member name="T:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher">
+            <summary>
+            This is an atomic publisher which can save all messages and the main data simultaneously.
+            </summary>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.Publish(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)">
+            <summary>
+            Publishes messages regardless prioritization. If order of processing matters use 
+            <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.Publish(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.String,System.Threading.CancellationToken)"/> should be used
+            </summary>
+            <param name="events"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.Publish(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Publishes messages considering prioritization. If order of processing does not matter use
+            <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.Publish(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)"/> should be used
+            </summary>
+            <param name="events"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.PublishDirectly(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)">
+            <summary>
+            Publishes messages regardless prioritization directly to broker without saving them first in database. 
+            If order of processing matters use 
+            <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.PublishDirectly(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.String,System.Threading.CancellationToken)"/> should be used
+            </summary>
+            <param name="events"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.PublishDirectly(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Publishes messages considering prioritization directly to broker without saving them first in database. 
+            If order of processing does not matter use
+            <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.PublishDirectly(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)"/> should be used
+            </summary>
+            <param name="events"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

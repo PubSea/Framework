@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>02-Messaging.EntityFramework.Kafka</name>
+    </assembly>
+    <members>
+        <member name="T:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig">
+            <summary>
+            Configuration of Kafka setup.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.ClientId">
+            <summary>
+            The Kafka ClientId.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.ConnectionString">
+            <summary>
+            Full connection string in order to connect to Kafka.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.TopicName">
+            <summary>
+            Topic name for outbox messages
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.ConsumingTopicNames">
+            <summary>
+            List of consuming topic names
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.Partitions">
+            <summary>
+            Count of partitions for outbox topic. Default is 10
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.ConsumerGroupId">
+            <summary>
+            Group id in order to recognize group and assign partitions in distributed applictions.
+            </summary>
+        </member>
+        <member name="P:PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig.ConcurrentConsumers">
+            <summary>
+            Number of concurrent consumers consumes messages of different partitions.
+            </summary>
+        </member>
+        <member name="M:PubSea.Messaging.EntityFramework.Kafka.Configs.SeaKafkaMessagingConfigExtensions.UseKafkaBroker(PubSea.Messaging.EntityFramework.Configs.SeaMessagingConfig,System.Action{PubSea.Messaging.EntityFramework.Kafka.Configs.KafkaConfig})">
+            <summary>
+            Adds Kafka transport layer to messaging system.
+            </summary>
+            <param name="config"></param>
+            <param name="kafkaConfig"></param>
+            <returns></returns>
+            <exception cref="T:PubSea.Framework.Exceptions.SeaException"></exception>
+        </member>
+    </members>
+</doc>

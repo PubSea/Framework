@@ -1,0 +1,22 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Version>9.2.16</Version>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Company>PubSea</Company>
+		<Authors>Farshad Goodarzi</Authors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Copyright>Copyright (c) 2025-$([System.DateTime]::UtcNow.Year) Sea</Copyright>
+        <PackageProjectUrl>https://github.com/PubSea/Framework</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/PubSea/Framework</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+		<None Include="../icon.png" Pack="true" Visible="false" PackagePath="" />
+        <None Include="../LICENSE" Pack="true" Visible="false" PackagePath="" />
+		<None Include="../README.md" Pack="true" Visible="false" PackagePath="" />
+    </ItemGroup>
+</Project>
