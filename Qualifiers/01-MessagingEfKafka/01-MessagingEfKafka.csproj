@@ -12,8 +12,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
 		<PackageReference Include="CaseConverter" Version="2.0.1" />
-		<PackageReference Include="Aspire.Npgsql" Version="9.5.1" />
-		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.1" />
+		<PackageReference Include="Aspire.Npgsql" Version="9.5.2" />
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.2" />
 		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
 			<PrivateAssets>all</PrivateAssets>
