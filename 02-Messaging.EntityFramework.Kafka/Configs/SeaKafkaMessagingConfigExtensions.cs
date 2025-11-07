@@ -35,11 +35,9 @@ public static class SeaKafkaMessagingConfigExtensions
 
         config.Services.TryAddSingleton(newKafkaConfig);
         config.Services.TryAddSingleton<IBrokerService, KafkaBrokerService>();
-        config.Services.TryAddSingleton<OutboxMessageTopicInitializer>();
+        config.Services.AddHostedService<OutboxMessageTopicsInitializer>();
 
         AddConsumers(config.Services, newKafkaConfig);
-
-        InitializeOutboxMessagesTopic(config.Services);
 
         return config;
     }
@@ -57,15 +55,5 @@ public static class SeaKafkaMessagingConfigExtensions
         {
             services.Add(ServiceDescriptor.Singleton<IHostedService, KafkaMainConsumer>());
         }
-    }
-
-    private static void InitializeOutboxMessagesTopic(IServiceCollection services)
-    {
-        Task.Factory.StartNew(async () =>
-        {
-            using var provider = services.BuildServiceProvider();
-            var topicInitializer = provider.GetRequiredService<OutboxMessageTopicInitializer>();
-            await topicInitializer.Init();
-        }, TaskCreationOptions.LongRunning);
     }
 }

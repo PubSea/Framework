@@ -1,20 +1,21 @@
 ﻿using Confluent.Kafka;
 using Confluent.Kafka.Admin;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PubSea.Messaging.EntityFramework.Kafka.Configs;
 
-namespace PubSea.Messaging.EntityFramework.Kafka.Services.Implementations;
+namespace PubSea.Messaging.EntityFramework.Kafka.HostedServices;
 
-internal sealed class OutboxMessageTopicInitializer
+internal sealed class OutboxMessageTopicsInitializer : BackgroundService
 {
+    private readonly ILogger<OutboxMessageTopicsInitializer> _logger;
     private readonly KafkaConfig _config;
-    private readonly ILogger<OutboxMessageTopicInitializer> _logger;
     private readonly AdminClientConfig _adminClientConfig;
 
-    public OutboxMessageTopicInitializer(KafkaConfig config, ILogger<OutboxMessageTopicInitializer> logger)
+    public OutboxMessageTopicsInitializer(ILogger<OutboxMessageTopicsInitializer> logger, KafkaConfig config)
     {
-        _config = config;
         _logger = logger;
+        _config = config;
         _adminClientConfig = new AdminClientConfig
         {
             BootstrapServers = _config.ConnectionString,
@@ -22,7 +23,7 @@ internal sealed class OutboxMessageTopicInitializer
         };
     }
 
-    public async Task Init()
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
