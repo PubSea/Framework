@@ -32,3 +32,8 @@ docs/.vuepress/dist
 .vscode
 .idea
 appsettings.Development.json
+
+# JetBrains / MSBuild build host output
+BuildHost-net472/
+BuildHost-netcore/
+

@@ -21,12 +21,11 @@
 		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
 		<PackageReference Include="Minio.AspNetCore.HealthChecks" Version="6.0.1" />
 		<PackageReference Include="Minio.AspNetCore" Version="6.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.1" />
 		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.15.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="RedLock.net" Version="2.3.2" />
