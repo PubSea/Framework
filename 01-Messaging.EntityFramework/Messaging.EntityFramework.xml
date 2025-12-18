@@ -200,6 +200,7 @@
             <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.Publish(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)"/> should be used
             </summary>
             <param name="events"></param>
+            <param name="prioritizerKey"></param>
             <param name="ct"></param>
             <returns></returns>
         </member>
@@ -220,6 +221,7 @@
             <see cref="M:PubSea.Messaging.EntityFramework.Services.Abstractions.ISeaPublisher.PublishDirectly(System.Collections.Generic.IReadOnlyList{PubSea.Framework.Events.IEvent},System.Threading.CancellationToken)"/> should be used
             </summary>
             <param name="events"></param>
+            <param name="prioritizerKey"></param>
             <param name="ct"></param>
             <returns></returns>
         </member>

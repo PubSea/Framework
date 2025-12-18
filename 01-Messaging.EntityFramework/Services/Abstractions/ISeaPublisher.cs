@@ -21,6 +21,7 @@ public interface ISeaPublisher
     /// <see cref="Publish(IReadOnlyList{IEvent}, CancellationToken)"/> should be used
     /// </summary>
     /// <param name="events"></param>
+    /// <param name="prioritizerKey"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
     Task Publish(IReadOnlyList<IEvent> events, string prioritizerKey, CancellationToken ct = default);
@@ -41,6 +42,7 @@ public interface ISeaPublisher
     /// <see cref="PublishDirectly(IReadOnlyList{IEvent}, CancellationToken)"/> should be used
     /// </summary>
     /// <param name="events"></param>
+    /// <param name="prioritizerKey"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
     Task PublishDirectly(IReadOnlyList<IEvent> events, string prioritizerKey, CancellationToken ct = default);

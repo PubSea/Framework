@@ -1,4 +1,4 @@
-﻿using HttpClientToCurl;
+﻿using HttpClientToCurl.Extensions;
 
 namespace PubSea.Framework.Http;
 
