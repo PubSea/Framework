@@ -15,8 +15,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Grpc.Core.Api" Version="2.71.0" />
-		<PackageReference Include="HttpClientToCurl" Version="2.0.8" />
+		<PackageReference Include="Grpc.Core.Api" Version="2.76.0" />
+		<PackageReference Include="HttpClientToCurl" Version="2.1.1" />
 		<PackageReference Include="IdGen" Version="3.0.7" />
 		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
 		<PackageReference Include="Minio.AspNetCore.HealthChecks" Version="6.0.1" />
