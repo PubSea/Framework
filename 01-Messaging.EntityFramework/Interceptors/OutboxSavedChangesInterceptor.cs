@@ -22,19 +22,19 @@ internal sealed class OutboxSavedChangesInterceptor : SaveChangesInterceptor
 
     public override async ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken ct = default)
     {
-        await PrepareMessagesFroTransferringToBroker(eventData, ct);
+        await PrepareMessagesForTransferringToBroker(eventData, ct);
 
         return await base.SavedChangesAsync(eventData, result, ct);
     }
 
     public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
-        _ = PrepareMessagesFroTransferringToBroker(eventData);
+        _ = PrepareMessagesForTransferringToBroker(eventData);
 
         return base.SavedChanges(eventData, result);
     }
 
-    private async ValueTask PrepareMessagesFroTransferringToBroker(SaveChangesCompletedEventData eventData, CancellationToken ct = default)
+    private async ValueTask PrepareMessagesForTransferringToBroker(SaveChangesCompletedEventData eventData, CancellationToken ct = default)
     {
         try
         {
@@ -54,7 +54,7 @@ internal sealed class OutboxSavedChangesInterceptor : SaveChangesInterceptor
                 return;
             }
 
-            await OutboxChannel.Instance.Writer.WriteAsync(messages);
+            await OutboxChannel.Instance.Writer.WriteAsync(messages, ct);
         }
         catch (Exception ex)
         {

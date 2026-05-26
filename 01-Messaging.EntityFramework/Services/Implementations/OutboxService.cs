@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PubSea.Framework.Events;
 using PubSea.Framework.Exceptions;
+using PubSea.Framework.Services.Abstractions;
 using PubSea.Messaging.EntityFramework.EntityFramework;
 using PubSea.Messaging.EntityFramework.Models;
 using PubSea.Messaging.EntityFramework.Services.Abstractions;
-using PubSea.Framework.Services.Abstractions;
 using System.Collections.Immutable;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -75,14 +75,6 @@ internal sealed class OutboxService : IOutboxService
             .Take(limitPerRead)
             .ToListAsync(ct);
     }
-
-    async Task IOutboxService.UpdatePublishedMessages(ICollection<OutboxMessage> messages, CancellationToken ct)
-    {
-        await _dbContext.OutboxMessages
-            .Where(m => messages.Select(m => m.Id).Contains(m.Id))
-            .ExecuteUpdateAsync(m => m.SetProperty(d => d.IsPublished, true), ct);
-    }
-
 
     async Task IOutboxService.RemovePublishedMessages(ICollection<OutboxMessage> messages, CancellationToken ct)
     {

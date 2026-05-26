@@ -134,7 +134,7 @@ internal sealed class MainConsumer : IMainConsumer
         }
 
         var task = consumerType
-            .GetMethod(nameof(ISeaConsumer<object>.Consume))
+            .GetMethod(nameof(ISeaConsumer<>.Consume))
             !.Invoke(consumer, [payload, ct]);
 
         await (Task)task!;
