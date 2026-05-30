@@ -1,4 +1,6 @@
-﻿namespace PubSea.Framework.Exceptions;
+﻿using System.Diagnostics;
+
+namespace PubSea.Framework.Exceptions;
 
 /// <summary>
 /// This is uniform exception in all applications. Every exception can carry a exception status 
@@ -23,7 +25,7 @@ public sealed class SeaException : Exception
     {
         ExceptionStatus = exceptionStatus;
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = code;
     }
 
@@ -31,7 +33,7 @@ public sealed class SeaException : Exception
         : base(GetMessage(message), innerException)
     {
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = code;
     }
 
@@ -39,7 +41,7 @@ public sealed class SeaException : Exception
         : base(GetMessage(message), innerException)
     {
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = INTERNAL_ERROR_CODE;
     }
 
@@ -48,7 +50,7 @@ public sealed class SeaException : Exception
     {
         ExceptionStatus = exceptionStatus;
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = code;
     }
 
@@ -57,7 +59,7 @@ public sealed class SeaException : Exception
     {
         ExceptionStatus = exceptionStatus;
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = INTERNAL_ERROR_CODE;
     }
 
@@ -65,7 +67,7 @@ public sealed class SeaException : Exception
         : base(GetMessage(message))
     {
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = code;
     }
 
@@ -73,7 +75,7 @@ public sealed class SeaException : Exception
         : base(GetMessage(message))
     {
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = INTERNAL_ERROR_CODE;
     }
 
@@ -82,7 +84,7 @@ public sealed class SeaException : Exception
     {
         ExceptionStatus = exceptionStatus;
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = INTERNAL_ERROR_CODE;
     }
 
@@ -90,7 +92,7 @@ public sealed class SeaException : Exception
         : base(BASE_MESSAGE)
     {
         LogMessage = logMessage;
-        TraceId = TraceIdGenerator.Generate();
+        TraceId = GenerateTraceId();
         Code = INTERNAL_ERROR_CODE;
     }
 
@@ -98,6 +100,11 @@ public sealed class SeaException : Exception
     public int Code { get; private set; }
     public ExceptionStatus ExceptionStatus { get; private set; } = ExceptionStatus.Internal;
     public string? LogMessage { get; private set; } = BASE_MESSAGE;
+
+    private static string GenerateTraceId()
+    {
+        return Activity.Current?.TraceId.ToString()[..10] ?? TraceIdGenerator.Generate();
+    }
 
     private static string GetMessage(string message)
     {

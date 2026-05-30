@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace PubSea.Framework.Http;
 
@@ -14,8 +13,6 @@ public sealed class HttpErrorLoggerMessageHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage rq, CancellationToken ct)
     {
-        var startTime = Stopwatch.GetTimestamp();
-
         HttpResponseMessage? rs = null;
 
         try
