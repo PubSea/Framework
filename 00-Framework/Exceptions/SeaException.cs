@@ -103,7 +103,7 @@ public sealed class SeaException : Exception
 
     private static string GenerateTraceId()
     {
-        return Activity.Current?.TraceId.ToString()[..10] ?? TraceIdGenerator.Generate();
+        return Activity.Current?.TraceId.ToString() ?? TraceIdGenerator.Generate();
     }
 
     private static string GetMessage(string message)

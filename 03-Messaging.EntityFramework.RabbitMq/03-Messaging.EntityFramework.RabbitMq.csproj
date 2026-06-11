@@ -7,11 +7,8 @@
 		<PackageTags>sea framework messaging entityFramework RabbitMq</PackageTags>
 		<Description>sea framework messaging entityFramework RabbitMq</Description>
 		<RootNamespace>PubSea.Messaging.EntityFramework.RabbitMq</RootNamespace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>./Messaging.EntityFramework.RabbitMq.xml</DocumentationFile>
-		<NoWarn>1701;1702;1591</NoWarn>
+		<NoWarn>$(NoWarn);1591;1701;1702</NoWarn>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

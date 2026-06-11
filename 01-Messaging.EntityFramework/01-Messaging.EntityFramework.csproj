@@ -7,18 +7,15 @@
 		<PackageTags>sea framework messaging entityFramework</PackageTags>
 		<Description>sea framework messaging entityFramework</Description>
 		<RootNamespace>PubSea.Messaging.EntityFramework</RootNamespace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>./Messaging.EntityFramework.xml</DocumentationFile>
-		<NoWarn>1701;1702;1591</NoWarn>
+		<NoWarn>$(NoWarn);1591;1701;1702</NoWarn>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.8" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\00-Framework\00-Framework.csproj" />
+		<ProjectReference Include="..\00-Framework\00-Framework.csproj" />
 	</ItemGroup>
 </Project>
