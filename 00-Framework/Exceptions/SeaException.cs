@@ -17,8 +17,7 @@ public sealed class SeaException : Exception
     public const int TOO_MANY_REQUEST_CODE = 40_029;
     public const int INVALID_REDIRECT_URL_CODE = 30_002;
 
-    public const string BASE_MESSAGE =
-        "یک خطای غیر منتظره رخ داد. لطفا با ادمین تماس بگیرید.";
+    public const string BASE_MESSAGE = "یک خطای غیر منتظره رخ داد";
 
     public SeaException(string message, int code, ExceptionStatus exceptionStatus, Exception innerException, string? logMessage = default)
         : base(GetMessage(message), innerException)

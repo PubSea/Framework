@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PubSea.Framework.ApiResponse;
 using PubSea.Framework.Exceptions;
 using PubSea.Framework.Utility;
+using System.Diagnostics;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -49,7 +50,7 @@ public sealed class ExceptionMiddleware
         {
             var seaException = ex as SeaException;
             var message = GetErrorMessage(ex);
-            var traceId = seaException?.TraceId ?? TraceIdGenerator.Generate();
+            var traceId = seaException?.TraceId ?? Activity.Current?.TraceId.ToString() ?? TraceIdGenerator.Generate();
             var code = seaException?.Code ?? SeaException.INTERNAL_ERROR_CODE;
 
             logger.LogErrorWithTraceId(ex, message, traceId);
