@@ -36,7 +36,7 @@
   - [Mapster-based Mapping](#mapster-based-mapping)
   - [Snowflake and HashId Services](#snowflake-and-hashid-services)
   - [Unit of Work with EF Core](#unit-of-work-with-ef-core)
-  - [File Store (MinIO)](#file-store-minio)
+  - [File Service](#file-service)
 - [Package Reference](#package-reference)
   - [00-Framework](#00-framework)
   - [01-Messaging.EntityFramework](#01-messagingentityframework)
@@ -81,7 +81,6 @@
   - [REST API: ID generation (Snowflake)](#rest-api-id-generation-snowflake)
   - [REST API: HashId encode/decode](#rest-api-hashid-encodedecode)
   - [REST API: Hybrid cache and SLO helpers](#rest-api-hybrid-cache-and-slo-helpers)
-  - [REST API: File store (MinIO)](#rest-api-file-store-minio)
   - [REST API: Health checks and error handling](#rest-api-health-checks-and-error-handling)
   - [Mediator: Commands, queries, and publish](#mediator-commands-queries-and-publish)
   - [Domain Events: Publishing internal events](#domain-events-publishing-internal-events)
@@ -97,7 +96,7 @@
 
 **What is PubSea Framework?**
 
-SeaFramework is an opinionated ASP.NET Core framework that applies Domain-Driven Design (DDD) patterns and provides production-ready utilities: a lightweight Mediator, an Entity Framework–backed Outbox/Inbox messaging module with pluggable brokers (Kafka, RabbitMQ, or a no‑op default), mapping helpers, health checks, error handling middleware, Snowflake/HashId services, file storage (MinIO), hybrid caching, and more.
+SeaFramework is an opinionated ASP.NET Core framework that applies Domain-Driven Design (DDD) patterns and provides production-ready utilities: a lightweight Mediator, an Entity Framework–backed Outbox/Inbox messaging module with pluggable brokers (Kafka, RabbitMQ, or a no‑op default), mapping helpers, health checks, error handling middleware, Snowflake/HashId services, file service, hybrid caching, and more.
 
 **Why use PubSea Framework?**
 
@@ -137,7 +136,7 @@ This section explains the organization of the solution and what each project pro
   - Snowflake: Time-ordered unique ID generation (Twitter Snowflake algorithm)
   - HashId: Encoding/decoding of numeric IDs into short, URL-safe strings
   - DateTime: Persian/Jalali calendar conversions and timezone handling
-- **File Storage (MinIO)** (`AddSeaFileStore`): S3-compatible file storage with presigned URLs for secure file access.
+- **File Service ** (`AddSeaFileService`): Zip files and ... .
 - **Utilities**: Caching extensions (Redis hybrid cache), SLO (Single Logout) helpers, logging utilities, and common helpers.
 
 #### `01-Messaging.EntityFramework` - EF Core Outbox/Inbox Messaging
@@ -211,7 +210,7 @@ This section helps you decide which packages to install based on your needs.
 **Provides**:
 - DDD primitives: domain events/dispatcher, unit of work, aggregate root base classes
 - Web utilities: middlewares, API response helpers, health checks, HTTP error logging
-- Services: mapper (Mapster), Snowflake/HashId/DateTime services, file store (MinIO)
+- Services: mapper (Mapster), Snowflake/HashId/DateTime services, file service
 - Utilities: caching extensions, SLO helpers, logging helpers
 
 **Use cases**:
@@ -305,7 +304,7 @@ Packages:
 
 - PubSea.Framework
   - PackageId: `PubSea.Framework`
-  - Provides: DDD primitives, domain events/dispatcher, UoW, middlewares, API response helpers, mapper, health checks, HttpClient error logging, Snowflake/HashId/DateTime services, MinIO file store
+  - Provides: DDD primitives, domain events/dispatcher, UoW, middlewares, API response helpers, mapper, health checks, HttpClient error logging, Snowflake/HashId/DateTime services, file service
   - Install:
     ```bash
     dotnet add package PubSea.Framework
@@ -350,7 +349,7 @@ Feature to package mapping:
 
 - Mediator (Send/Publish): `PubSea.Mediator`
 - Domain events and dispatcher: `PubSea.Framework`
-- API response envelope, middlewares, mapper, health checks, HttpClient logging, services (Snowflake/HashId/DateTime), MinIO file store: `PubSea.Framework`
+- API response envelope, middlewares, mapper, health checks, HttpClient logging, services (Snowflake/HashId/DateTime), file service: `PubSea.Framework`
 - Messaging (Outbox/Inbox, `ISeaPublisher`, consumers, background services): `PubSea.Messaging.EntityFramework`
 - Kafka transport: `PubSea.Messaging.EntityFramework.Kafka`
 - RabbitMQ transport: `PubSea.Messaging.EntityFramework.RabbitMq`
@@ -759,14 +758,14 @@ services.Configure<RabbitMqConfig>(cfg =>
     - `AddSeaEventDispatcher()`, `UseSeaEventDispatcher()`
     - `AddSeaMapper()`, `UseSeaMapper()`
     - `AddEfUnitOfWork<TDbContext>()`
-    - `AddSeaFileStore(Action<SeaFileStoreConfig>)`
+    - `AddSeaFileService()`
     - `AddHttpErrorLoggerMessageHandler()`
   - Middlewares
     - `ExceptionMiddleware`, `WebErrorHandlerMiddleware`
   - API response
     - `ApiActionResult`, `ApiResult`, `ApiError`
   - Services
-    - `ISnowflakeService`, `IHashIdService`, `IDateTimeService`, `ISeaFileStore`
+    - `ISnowflakeService`, `IHashIdService`, `IDateTimeService`, `ISeaFileService`
 
 Recommended usage:
 
@@ -775,7 +774,7 @@ builder.Services.AddSeaEventDispatcher();
 builder.Services.AddSeaMapper();
 builder.Services.AddEfUnitOfWork<AppDbContext>();
 builder.Services.AddHttpErrorLoggerMessageHandler();
-builder.Services.AddSeaFileStore(cfg => { /* MinIO settings */ });
+builder.Services.AddSeaFileService();
 
 app.UseSeaEventDispatcher();
 app.UseSeaMapper();
@@ -893,7 +892,7 @@ Notes:
 - HTTP: `HttpErrorLoggerMessageHandler`
 - Mapping: `AddSeaMapper` + `SeaTypeAdapterConfig` shortcuts
 - Services: `AddSnowflakeService`, `AddHashIdService`, `AddDateTimeService`
-- File store (MinIO): `AddSeaFileStore` + health check integration
+- File service: `AddSeaFileService`
 - Caching & SLO: `AddSeaRedisHybridCache`, `AddSeaIdentityProviderSlo` (see `Qualifiers/00-RestApi`)
 
 ### API responses
@@ -1035,22 +1034,16 @@ public sealed class OrderService
 }
 ```
 
-### File store (MinIO)
+### File service
 
 ```csharp
-builder.Services.AddSeaFileStore(cfg =>
-{
-    cfg.BaseUrl = "http://localhost:9000";
-    cfg.UserName = "ROOTUSER";
-    cfg.Password = "CHANGEME123";
-    cfg.RootName = "users";
-});
+builder.Services.AddSeaFileService();
 
 public sealed class AvatarService
 {
-    private readonly ISeaFileStore _files;
+    private readonly ISeaFileService _files;
 
-    public AvatarService(ISeaFileStore files) => _files = files;
+    public AvatarService(ISeaFileService files) => _files = files;
 
     public async Task<string> Upload(byte[] content, CancellationToken ct)
         => await _files.SaveFile("avatars/u1.png", "image/png", content, ct);
@@ -1807,9 +1800,9 @@ app.UseSeaEventDispatcher();
 
 ### File store (00-Framework)
 
-- Types: `ISeaFileStore`, `SeaFileStore`, `SeaFileStoreConfig`
-- Bootstrapping: `AddSeaFileStore(Action<SeaFileStoreConfig>)`
-- Benefit: Simple file persistence over MinIO with presigned URLs and zipping helpers.
+- Types: `ISeaFileService`, `SeaFileService`, `SeaFileServiceConfig`
+- Bootstrapping: `AddSeaFileService()`
+- Benefit: Simple files zipping and working with files.
 
 ### Caching & SLO (00-Framework)
 
@@ -1921,23 +1914,17 @@ builder.Services.AddSeaRedisHybridCache(options =>
 builder.Services.AddSeaIdentityProviderSlo("localhost:6379");
 ```
 
-### REST API: File store (MinIO)
+### REST API: File service
 
 ```csharp
-builder.Services.AddSeaFileStore(config =>
-{
-    config.BaseUrl = "http://localhost:9000";
-    config.UserName = "ROOTUSER";
-    config.Password = "CHANGEME123";
-    config.RootName = "users";
-});
+builder.Services.AddSeaFileService();
 
 [ApiController]
 [Route("files")]
 public sealed class FilesController : ControllerBase
 {
-    private readonly ISeaFileStore _files;
-    public FilesController(ISeaFileStore files) => _files = files;
+    private readonly ISeaFileService _files;
+    public FilesController(ISeaFileService files) => _files = files;
 
     [HttpPost]
     public async Task<IActionResult> Upload(IFormFile file, CancellationToken ct)

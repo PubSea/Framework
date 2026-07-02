@@ -37,31 +37,31 @@ public static partial class LoggerMessageDefinitions
     //=======================================================================================================================================//
 
     [LoggerMessage(EventId = 2000, Level = LogLevel.Information,
-    Message = "File is saving in object store, {FilePath}, {ContentType}, {DateTime}, {JalaliDateTime}, {SecurityLog}",
+    Message = "File is saving in object store, {BucketName}, {ObjectKey}, {ContentType}, {DateTime}, {JalaliDateTime}, {SecurityLog}",
     SkipEnabledCheck = true)]
     private static partial void LogFileSavingStarted(this ILogger logger,
-    string filePath, string contentType,
+    string bucketName, string objectKey, string contentType,
     DateTime dateTime, string jalaliDateTime, byte securityLog);
 
-    public static void LogFileSavingStarted(this ILogger logger, string filePath, string contentType)
+    public static void LogFileSavingStarted(this ILogger logger, string bucketName, string objectKey, string contentType)
     {
         var (dateTime, jalaliDateTime) = DateTimeHelper.GetUtcCurrentDateTimes();
-        LogFileSavingStarted(logger, filePath, contentType, dateTime, jalaliDateTime, 1);
+        LogFileSavingStarted(logger, bucketName, objectKey, contentType, dateTime, jalaliDateTime, 1);
     }
 
     //=======================================================================================================================================//
 
     [LoggerMessage(EventId = 2001, Level = LogLevel.Information,
-    Message = "File saving in object store finished successfully, {FilePath}, {ContentType}, {DateTime}, {JalaliDateTime}, {SecurityLog}",
+    Message = "File saving in object store finished successfully, {BucketName}, {ObjectKey}, {ContentType}, {DateTime}, {JalaliDateTime}, {SecurityLog}",
     SkipEnabledCheck = true)]
     private static partial void LogFileSavingFinished(this ILogger logger,
-    string filePath, string contentType,
-    DateTime dateTime, string jalaliDateTime, byte securityLog);
+        string bucketName, string objectKey, string contentType,
+        DateTime dateTime, string jalaliDateTime, byte securityLog);
 
-    public static void LogFileSavingFinished(this ILogger logger, string filePath, string contentType)
+    public static void LogFileSavingFinished(this ILogger logger, string bucketName, string objectKey, string contentType)
     {
         var (dateTime, jalaliDateTime) = DateTimeHelper.GetUtcCurrentDateTimes();
-        LogFileSavingFinished(logger, filePath, contentType, dateTime, jalaliDateTime, 1);
+        LogFileSavingFinished(logger, bucketName, objectKey, contentType, dateTime, jalaliDateTime, 1);
     }
 
     //=======================================================================================================================================//

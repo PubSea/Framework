@@ -1,12 +1,12 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using RestApi.Services;
 using PubSea.Framework.Attributes;
 using PubSea.Framework.DomainModel;
 using PubSea.Framework.Extensions;
 using PubSea.Framework.Http.HealthCheck;
-using PubSea.Mediator;
 using PubSea.Framework.Middlewares;
+using PubSea.Mediator;
+using RestApi.Services;
 using Serilog;
 using Serilog.Exceptions;
 using System.Text.Json.Serialization;
@@ -38,13 +38,7 @@ try
 
     builder.Services.AddSeaEventDispatcher();
 
-    builder.Services.AddSeaFileStore(config =>
-    {
-        config.BaseUrl = "http://localhost:9000";
-        config.UserName = "ROOTUSER";
-        config.Password = "CHANGEME123";
-        config.RootName = "users";
-    });
+    builder.Services.AddSeaFileService();
 
     builder.Services.AddSeaRedisHybridCache(options =>
     {

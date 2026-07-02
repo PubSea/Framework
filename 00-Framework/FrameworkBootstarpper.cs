@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Minio;
-using Minio.AspNetCore;
-using Minio.AspNetCore.HealthChecks;
 using PubSea.Framework.Data;
 using PubSea.Framework.Events;
 using PubSea.Framework.Grpc.Types;
@@ -15,7 +12,6 @@ using PubSea.Framework.Http.HealthCheck;
 using PubSea.Framework.Mapping;
 using PubSea.Framework.Middlewares;
 using PubSea.Framework.Services.Abstractions;
-using PubSea.Framework.Services.Dtos;
 using PubSea.Framework.Services.Implementations;
 using PubSea.Framework.Utility;
 
@@ -215,38 +211,10 @@ public static class FrameworkBootstarpper
     /// Registers file services in pipeline
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="config"></param>
     /// <returns></returns>
-    public static IServiceCollection AddSeaFileStore(this IServiceCollection services,
-        Action<SeaFileStoreConfig> config)
+    public static IServiceCollection AddSeaFileService(this IServiceCollection services)
     {
-        SeaFileStoreConfig newConfig = new();
-        config.Invoke(newConfig);
-
-        services.TryAddSingleton(newConfig);
-
-        services.TryAddScoped<ISeaFileStore, SeaFileStore>();
-
-        services.AddMinio(options =>
-        {
-            var baseUrl = new Uri(newConfig.BaseUrl);
-            var baseUrlHasSsl = baseUrl.Scheme == "https";
-
-            options.Endpoint = baseUrl.Authority;
-            options.AccessKey = newConfig.UserName;
-            options.SecretKey = newConfig.Password;
-            options.ConfigureClient(client =>
-            {
-                client.WithSSL(baseUrlHasSsl);
-            });
-        });
-
-        services.AddHealthChecks()
-            .AddMinio(sp =>
-            {
-                var factory = sp.GetRequiredService<Minio.AspNetCore.IMinioClientFactory>();
-                return (MinioClient)factory.CreateClient();
-            });
+        services.TryAddScoped<ISeaFileService, SeaFileService>();
 
         return services;
     }
