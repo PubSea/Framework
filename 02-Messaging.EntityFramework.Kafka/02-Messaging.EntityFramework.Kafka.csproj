@@ -4,8 +4,8 @@
 		<Nullable>enable</Nullable>
 		<PackageId>PubSea.Messaging.EntityFramework.Kafka</PackageId>
 		<Product>PubSea.Messaging.EntityFramework.Kafka</Product>
-		<PackageTags>sea framework messaging entityFramework kafka</PackageTags>
-		<Description>sea framework messaging entityFramework kafka</Description>
+		<Description>Enterprise-ready .NET service bus and messaging framework for building resilient distributed systems and event-driven microservices. Supports message publishing, command processing, event-driven workflows, asynchronous communication, reliable delivery patterns, and extensible integrations for modern .NET applications. Designed for developers who need a clean, flexible, and high-performance alternative for service-to-service communication.</Description>
+		<PackageTags>kafka;messaging;message-bus;service-bus;event-bus;event-driven;pubsub;publish-subscribe;message-queue;queue;broker;asynchronous;async;distributed-systems;microservices;integration;integration-events;domain-events;event-messaging;</PackageTags>
 		<RootNamespace>PubSea.Messaging.EntityFramework.Kafka</RootNamespace>
 		<NoWarn>$(NoWarn);1591;1701;1702</NoWarn>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>

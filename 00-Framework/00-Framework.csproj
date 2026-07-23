@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>PubSea.Framework</RootNamespace>
-		<Description>It is a Domain Driven Design Framework, including contracts for creating unified rest api and some helpers.</Description>
+		<Description>ASP.NET Core DDD building blocks and production utilities: domain events, EF Core unit of work, unified API responses, error middleware, Snowflake/HashId IDs, Mapster mapping, and health checks.</Description>
 		<PackageId>PubSea.Framework</PackageId>
 		<Product>PubSea.Framework</Product>
-		<PackageTags>domain,driven,design,model,framework</PackageTags>
+		<PackageTags>aspnetcore;ddd;domain-events;unit-of-work;entity-framework-core;web-api;middleware;error-handling;snowflake;hashids;mapster;health-check;redis;microservices;caching</PackageTags>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<NoWarn>$(NoWarn);1591;1701;1702</NoWarn>
@@ -31,5 +31,10 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="../README.md" />
+		<None Include="README.md" Pack="true" Visible="false" PackagePath="" />
 	</ItemGroup>
 </Project>

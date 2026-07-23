@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>PubSea.Mediator</RootNamespace>
-		<Description>Mediator implementations</Description>
 		<PackageId>PubSea.Mediator</PackageId>
 		<Product>PubSea.Mediator</Product>
-		<PackageTags>mediator,framework</PackageTags>
+		<Description>A modern .NET mediator and messaging framework for building clean, scalable, and event-driven applications. A lightweight alternative to MediatR for implementing commands, queries, notifications, handlers, and messaging patterns with seamless dependency injection and ASP.NET Core integration. Designed for clean architecture, CQRS, microservices, and high-performance .NET applications.</Description>
+		<PackageTags>mediatr;mediatr-alternative;mediator;service-bus;message-bus;messaging;event-bus;event-driven;pubsub;commands;queries;cqrs;command-handler;event-handler;message-handler;pipeline-behavior;dependency-injection;aspnetcore;dotnet;microservices;distributed-systems</PackageTags>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<NoWarn>$(NoWarn);1591;1701;1702</NoWarn>
