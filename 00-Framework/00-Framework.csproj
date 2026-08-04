@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Grpc.Core.Api" Version="2.80.0" />
+		<PackageReference Include="Grpc.Core.Api" Version="2.83.0" />
 		<PackageReference Include="HttpClientToCurl" Version="2.2.0" />
 		<PackageReference Include="IdGen" Version="3.0.7" />
 		<PackageReference Include="Mapster.DependencyInjection" Version="10.0.11" />

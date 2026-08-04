@@ -80,7 +80,6 @@ try
             .Enrich.WithAssemblyName()
             .Enrich.WithExceptionDetails()
             .WriteTo.Console()
-            .WriteTo.Http(builder.Configuration.GetValue<string>("Serilog:LogstashUri")!, queueLimitBytes: null)
             .ReadFrom.Configuration(context.Configuration);
     });
 
