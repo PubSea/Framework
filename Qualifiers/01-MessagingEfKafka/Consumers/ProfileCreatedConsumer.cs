@@ -1,5 +1,5 @@
-﻿using PubSea.Messaging.EntityFramework.Services.Abstractions;
-using Sea.MessagingContracts.UsersManagement.User;
+﻿using MessagingEfKafka.Events;
+using PubSea.Messaging.EntityFramework.Services.Abstractions;
 
 namespace MessagingEfKafka.Consumers;
 

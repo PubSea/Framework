@@ -1,5 +1,4 @@
 ﻿using PubSea.Framework.Events;
-using Sea.MessagingContracts.UsersManagement.User;
 
 namespace MessagingEfKafka.Events;
 
